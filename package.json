@@ -1,0 +1,36 @@
+{
+  "name": "react-todo",
+  "version": "1.0.0",
+  "description": "A TodoList Demo designed by react.js",
+  "main": "./app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build"
+  },
+  "keywords": [
+    "React",
+    "Todo"
+  ],
+  "author": "MrErHu",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "react": "^15.3.2",
+    "react-bootstrap": "^0.30.7",
+    "react-dom": "^15.3.2",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "style-loader": "^0.13.1"
+  }
+}
