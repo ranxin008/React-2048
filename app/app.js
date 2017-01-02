@@ -31,13 +31,10 @@ class App extends React.Component {
     }
 
     handleKeyDown(event){
-        var directions = {
-            37: left,
-            38: up,
-            39: right,
-            40: down
-        };
-        // if(directions[event.keyCode] )
+        var newBoard = Tool.moveBoard(this.state.board,event.keyCode);
+        this.setState({
+            board: newBoard
+        });
 
     }
 
