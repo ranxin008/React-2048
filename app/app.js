@@ -4,30 +4,45 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import GameContainer from './component/GameContainer';
+import Tool from './tool';
+
 // import 'css/index.css';
 require('./css/index.css');
 
 //棋盘为二维数组
-var intialBoard =
-    [
-        [null, null, null, null],
-        [null, null, null, null],
-        [null, null, null, null],
-        [null, null, null, null]
-    ];
-
-var score = 0;
-
-
-
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            board: intialBoard,
-            score: score
+            score: 0,
+            board: Tool.intialBoard()
         };
+        this.handleReStartGame = this.handleReStartGame.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+    }
+
+    handleReStartGame() {
+        this.setState({
+            score: 0,
+            board: Tool.intialBoard()
+        });
+    }
+
+    handleKeyDown(event){
+        var directions = {
+            37: left,
+            38: up,
+            39: right,
+            40: down
+        };
+        // if(directions[event.keyCode] )
+
+    }
+
+    componentDidMount(){
+        window.addEventListener('keydown',this.handleKeyDown);
     }
 
     render() {
@@ -42,41 +57,12 @@ class App extends React.Component {
                 </div>
                 <div className="game-intro">
                     <span className="subtitle">2048 developed by React</span>
-                    <span className="restart-container">New Game</span>
+                    <span className="restart-container" onClick={this.handleReStartGame}>New Game</span>
                 </div>
-                <div className="game-container">
-                    <div className="grid-row">
-                        <div className="grid-col">
-                            <div className="tile value2">1024</div>
-                        </div>
-                        <div className="grid-col">12</div>
-                        <div className="grid-col">12</div>
-                        <div className="grid-col-end">12</div>
-                    </div>
-                    <div className="grid-row">
-                        <div className="grid-col">12</div>
-                        <div className="grid-col">12</div>
-                        <div className="grid-col">12</div>
-                        <div className="grid-col-end">12</div>
-                    </div>
-                    <div className="grid-row">
-                        <div className="grid-col">12</div>
-                        <div className="grid-col">12</div>
-                        <div className="grid-col">12</div>
-                        <div className="grid-col-end">12</div>
-                    </div>
-                    <div className="grid-row">
-                        <div className="grid-col">12</div>
-                        <div className="grid-col">12</div>
-                        <div className="grid-col">12</div>
-                        <div className="grid-col-end">12</div>
-                    </div>
-                </div>
-
+                <GameContainer board={this.state.board}/>
             </div>
         );
     }
 }
 
-
-ReactDOM.render(<App />,document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));

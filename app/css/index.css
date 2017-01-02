@@ -65,6 +65,7 @@
     color: #f9f6f2;
     font-size: 17px;
     padding-top: 12px;
+    cursor: pointer;
 }
 .game-container{
     width: 426px;
@@ -103,13 +104,15 @@
     text-align: center;
     padding-top: 19px;
 }
-
+.valuenull{
+    background-color: rgba(238, 228, 218, 0.35);
+}
 .value2{
-    background-color:#ebb26f;
+    background-color: #ebb26f;
     font-size: 52px;
 }
 .value4{
-    background-color:#ea6feb;
+    background-color: #ea6feb;
     font-size: 52px;
 }
 
@@ -150,5 +153,9 @@
 
 .value1024 {
     background-color: #e4eb6f;
+    font-size: 40px;
+}
+.value2048 {
+    background-color: #d1eb6b;
     font-size: 40px;
 }
