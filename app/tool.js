@@ -7,7 +7,8 @@ var tool = {
     copyBoard: copyBoard,
     getRandom2OR4: getRandom2OR4,
     intialBoard: intialBoard,
-    moveBoard: moveBoard
+    moveBoard: moveBoard,
+    mergeBoard: mergeBoard
 };
 
 /**
@@ -92,7 +93,7 @@ function intialBoard() {
 }
 
 /**
- *
+ * 移动棋盘
  * @param board
  * @param directions 37: left,  38: up, 39: right,  40: down
  */
@@ -171,6 +172,42 @@ function moveBoard(board, direction) {
         }
     }
     return newBoard;
+}
+
+/**
+ * 合并棋盘
+ * @param board
+ * @param directions 37: left,  38: up, 39: right,  40: down
+ */
+function mergeBoard(board, direction) {
+    var score = 0;
+    var newBoard = copyBoard(board);
+    if (direction == 38 || direction == 40) {
+        //up or down
+        for (let j = 0; j < 4; j++) {
+            for (let i = 0; i < 3; i++) {
+                if (newBoard[i][j] == newBoard[i + 1][j]) {
+                    newBoard[i][j] *= 2;
+                    newBoard[i + 1][j] = null;
+                }
+            }
+        }
+    }
+    if (direction == 37 || direction == 39) {
+        //left or right
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (newBoard[i][j] == newBoard[i][j + 1]) {
+                    newBoard[i][j] *= 2;
+                    newBoard[i][j + 1] = null;
+                }
+            }
+        }
+    }
+    return {
+        board: newBoard,
+        score: score
+    }
 }
 
 

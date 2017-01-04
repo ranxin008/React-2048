@@ -56,6 +56,14 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _GameContainer = __webpack_require__(178);
+
+	var _GameContainer2 = _interopRequireDefault(_GameContainer);
+
+	var _tool = __webpack_require__(184);
+
+	var _tool2 = _interopRequireDefault(_tool);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67,12 +75,9 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 	// import 'css/index.css';
-	__webpack_require__(178);
+	__webpack_require__(180);
 
 	//棋盘为二维数组
-	var intialBoard = [[null, null, null, null], [null, null, null, null], [null, null, null, null], [null, null, null, null]];
-
-	var score = 0;
 
 	var App = function (_React$Component) {
 	    _inherits(App, _React$Component);
@@ -83,19 +88,79 @@
 	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
 	        _this.state = {
-	            board: intialBoard,
-	            score: score
+	            score: 0,
+	            board: _tool2.default.intialBoard()
 	        };
+	        _this.handleReStartGame = _this.handleReStartGame.bind(_this);
+	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(App, [{
+	        key: 'handleReStartGame',
+	        value: function handleReStartGame() {
+	            this.setState({
+	                score: 0,
+	                board: _tool2.default.intialBoard()
+	            });
+	        }
+	    }, {
+	        key: 'handleKeyDown',
+	        value: function handleKeyDown(event) {
+	            var newBoard = _tool2.default.moveBoard(this.state.board, event.keyCode);
+	            this.setState({
+	                board: newBoard
+	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            window.addEventListener('keydown', this.handleKeyDown);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'app' },
-	                'Hello'
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'heading' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'title' },
+	                        '2048'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'score-container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'score-tip' },
+	                            'score'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'score' },
+	                            this.state.score
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'game-intro' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'subtitle' },
+	                        '2048 developed by React'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'restart-container', onClick: this.handleReStartGame },
+	                        'New Game'
+	                    )
+	                ),
+	                _react2.default.createElement(_GameContainer2.default, { board: this.state.board })
 	            );
 	        }
 	    }]);
@@ -21522,13 +21587,165 @@
 /* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Tail = __webpack_require__(179);
+
+	var _Tail2 = _interopRequireDefault(_Tail);
+
+	__webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by wanglei on 2017/1/2.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var GameContainer = function (_React$Component) {
+	    _inherits(GameContainer, _React$Component);
+
+	    function GameContainer(props) {
+	        _classCallCheck(this, GameContainer);
+
+	        return _possibleConstructorReturn(this, (GameContainer.__proto__ || Object.getPrototypeOf(GameContainer)).call(this, props));
+	    }
+
+	    _createClass(GameContainer, [{
+	        key: 'render',
+	        value: function render() {
+	            var board = this.props.board;
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'game-container' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'grid-row' },
+	                    _react2.default.createElement(_Tail2.default, { value: board[0][0], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[0][1], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[0][2], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[0][3], col_end: true })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'grid-row' },
+	                    _react2.default.createElement(_Tail2.default, { value: board[1][0], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[1][1], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[1][2], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[1][3], col_end: true })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'grid-row' },
+	                    _react2.default.createElement(_Tail2.default, { value: board[2][0], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[2][1], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[2][2], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[2][3], col_end: true })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'grid-row' },
+	                    _react2.default.createElement(_Tail2.default, { value: board[3][0], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[3][1], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[3][2], col_end: false }),
+	                    _react2.default.createElement(_Tail2.default, { value: board[3][3], col_end: true })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return GameContainer;
+	}(_react2.default.Component);
+
+	exports.default = GameContainer;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by wanglei on 2017/1/2.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+	var Tail = function (_React$Component) {
+	    _inherits(Tail, _React$Component);
+
+	    function Tail(props) {
+	        _classCallCheck(this, Tail);
+
+	        return _possibleConstructorReturn(this, (Tail.__proto__ || Object.getPrototypeOf(Tail)).call(this, props));
+	    }
+
+	    _createClass(Tail, [{
+	        key: 'render',
+	        value: function render() {
+	            var value = !this.props.value ? '' : this.props.value;
+	            var col_end = this.props.col_end;
+	            var tile_style = !value ? 'tile valuenull' : 'tile value' + value;
+	            var col_style = col_end ? 'grid-col-end' : 'grid-col';
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: col_style },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: tile_style },
+	                    value
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Tail;
+	}(_react2.default.Component);
+
+	exports.default = Tail;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(179);
+	var content = __webpack_require__(181);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(181)(content, {});
+	var update = __webpack_require__(183)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21545,21 +21762,21 @@
 	}
 
 /***/ },
-/* 179 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(180)();
+	exports = module.exports = __webpack_require__(182)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".app{\n    margin:10px;\n    font-family: arial;\n    background-color: #faf8ef;\n}", ""]);
+	exports.push([module.id, ".app{\n    display: block;\n    width: 450px;\n    margin:10px;\n    font-family: arial;\n    background-color: #faf8ef;\n}\n\n.heading{\n    display: block;\n}\n\n.title{\n    width: 50%;\n    font-size: 74px;\n    font-weight: bold;\n    line-height: 66px;\n    margin: 10px;\n    color: #776e65;\n    font-family: \"Clear Sans\", \"Helvetica Neue\", Arial, sans-serif;\n\n}\n.score-container{\n    width: 109px;\n    float: right;\n    margin-top: 10px;\n    text-align: center;\n    background-color: #bbada0;\n    display: inline-block;\n    border-radius: 3px;\n}\n.score-tip{\n    color: #eee4da;\n    font-weight: bold;\n    text-align: center;\n    font-size: 13px;\n}\n.score{\n    color: white;\n    text-align: center;\n    font-size: 25px;\n}\n\n.game-intro{\n    display: block;\n    margin-top: 12px;\n    min-height: 55px;\n}\n\n.subtitle {\n    color: #8f7a66;\n    font-size: 17px;\n    font-weight: bold;\n    padding-left:10px;\n}\n\n.restart-container{\n    width: 109px;\n    height: 32px;\n    float: right;\n    text-align: center;\n    background-color: #8f7a66;\n    display: inline-block;\n    border-radius: 3px;\n    color: #f9f6f2;\n    font-size: 17px;\n    padding-top: 12px;\n    cursor: pointer;\n}\n.game-container{\n    width: 426px;\n    height: 426px;\n    margin: 10px 0px;\n    padding: 12px;\n    background: #bbada0;\n    border-radius: 6px;\n}\n.grid-row{\n    height: 97.5px;\n    width:100%;\n}\n\n.grid-col{\n    height: 97px;\n    width: 97px;\n    margin-right: 12px;\n    margin-bottom: 12px;\n    float: left;\n}\n\n.grid-col-end{\n    height: 97px;\n    width: 97px;\n    margin-bottom: 12px;\n    float: left;\n}\n\n.tile{\n    height: 78px;\n    font-weight: bold;\n    font-size: 45px;\n    color: white;\n    border-radius: 5px;\n    text-align: center;\n    padding-top: 19px;\n}\n.valuenull{\n    background-color: rgba(238, 228, 218, 0.35);\n}\n.value2{\n    background-color: #ebb26f;\n    font-size: 52px;\n}\n.value4{\n    background-color: #ea6feb;\n    font-size: 52px;\n}\n\n.value8 {\n    background-color: #eb6fa3;\n    font-size: 52px;\n}\n\n.value16 {\n    background-color: #7a6feb;\n    font-size: 48px;\n}\n\n.value32 {\n    background-color: #af6feb;\n    font-size: 48px;\n}\n\n.value64 {\n    background-color: #6febcf;\n    font-size: 48px;\n}\n\n.value128 {\n    background-color: #6fbeeb;\n    font-size: 44px;\n}\n\n.value256 {\n    background-color: #afeb6f;\n    font-size: 44px;\n}\n\n.value512 {\n    background-color: #7aeb6f;\n    font-size: 44px;\n}\n\n.value1024 {\n    background-color: #e4eb6f;\n    font-size: 40px;\n}\n.value2048 {\n    background-color: #d1eb6b;\n    font-size: 40px;\n}", ""]);
 
 	// exports
 
 
 /***/ },
-/* 180 */
+/* 182 */
 /***/ function(module, exports) {
 
 	/*
@@ -21615,7 +21832,7 @@
 
 
 /***/ },
-/* 181 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21865,6 +22082,211 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 184 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Created by wanglei on 2017/1/2.
+	 */
+
+	var tool = {
+	    getRandomPostion: getRandomPostion,
+	    copyBoard: copyBoard,
+	    getRandom2OR4: getRandom2OR4,
+	    intialBoard: intialBoard,
+	    moveBoard: moveBoard
+	};
+
+	/**
+	 * 复制传入的board
+	 * @param array
+	 */
+	function copyBoard(array) {
+	    var ret_arr = [];
+	    for (var i = 0; i < 4; i++) {
+	        var arr = [];
+	        for (var j = 0; j < 4; j++) {
+	            arr.push(array[i][j]);
+	        }
+	        ret_arr.push(arr);
+	    }
+	    return ret_arr;
+	}
+
+	/**
+	 * 获得随机未赋值的坐标点
+	 * @param array
+	 */
+	function getRandomPostion(array) {
+	    array = copyBoard(array);
+	    if (!judgeHasPostion(array)) {
+	        return null;
+	    }
+	    var postion = [];
+	    for (var i = 0; i < 4; ++i) {
+	        for (var j = 0; j < 4; ++j) {
+	            if (array[i][j] == null) {
+	                postion.push([i, j]);
+	            }
+	        }
+	    }
+	    var length = postion.length;
+	    var random = Math.floor(Math.random() * length);
+	    return postion[random];
+	}
+
+	/**
+	 * 判断是否存在空位置
+	 * @param array
+	 */
+	function judgeHasPostion(array) {
+	    for (var i = 0; i < 4; ++i) {
+	        for (var j = 0; j < 4; ++j) {
+	            if (array[i][j] == null) {
+	                return true;
+	            }
+	        }
+	    }
+	    return false;
+	}
+
+	/**
+	 * 随机获得2或者4
+	 */
+	function getRandom2OR4() {
+	    var value = [2, 4];
+	    var postion = Math.round(Math.random());
+	    return value[postion];
+	}
+
+	/**
+	 * 初始化棋盘
+	 */
+	function intialBoard() {
+	    var board = [[null, null, null, null], [null, null, null, null], [null, null, null, null], [null, null, null, null]];
+	    var postion = getRandomPostion(board);
+	    board[postion[0]][postion[1]] = getRandom2OR4();
+	    postion = getRandomPostion(board);
+	    board[postion[0]][postion[1]] = getRandom2OR4();
+	    return board;
+	}
+
+	/**
+	 * 移动棋盘
+	 * @param board
+	 * @param directions 37: left,  38: up, 39: right,  40: down
+	 */
+	function moveBoard(board, direction) {
+	    var newBoard = copyBoard(board);
+	    if (direction == 38) {
+	        //up
+	        for (var j = 0; j < 4; j++) {
+	            for (var i = 1; i < 4; i++) {
+	                if (newBoard[i][j] != null) {
+	                    var k = i - 1;
+	                    while (k >= 0 && newBoard[k][j] == null) {
+	                        k--;
+	                    }
+	                    k++;
+	                    if (k != i) {
+	                        newBoard[k][j] = newBoard[i][j];
+	                        newBoard[i][j] = null;
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    if (direction == 40) {
+	        //down
+	        for (var _j = 0; _j < 4; _j++) {
+	            for (var _i = 2; _i >= 0; _i--) {
+	                if (newBoard[_i][_j] != null) {
+	                    var _k = _j + 1;
+	                    while (_k < 4 && newBoard[_k][_j] == null) {
+	                        _k++;
+	                    }
+	                    _k--;
+	                    if (_k != _i) {
+	                        newBoard[_k][_j] = newBoard[_i][_j];
+	                        newBoard[_i][_j] = null;
+	                    }
+	                }
+	            }
+	        }
+	    }
+
+	    if (direction == 37) {
+	        //left
+	        for (var _i2 = 0; _i2 < 4; _i2++) {
+	            for (var _j2 = 1; _j2 < 4; _j2++) {
+	                if (newBoard[_i2][_j2] != null) {
+	                    var _k2 = _j2 - 1;
+	                    while (_k2 >= 0 && newBoard[_i2][_k2] == null) {
+	                        _k2--;
+	                    }
+	                    _k2++;
+	                    if (_k2 != _j2) {
+	                        newBoard[_i2][_k2] = newBoard[_i2][_j2];
+	                        newBoard[_i2][_j2] = null;
+	                    }
+	                }
+	            }
+	        }
+	    }
+
+	    if (direction == 39) {
+	        //right
+	        for (var _i3 = 0; _i3 < 4; _i3++) {
+	            for (var _j3 = 2; _j3 >= 0; _j3--) {
+	                var _k3 = _j3 + 1;
+	                while (_k3 < 4 && newBoard[_i3][_k3] == null) {
+	                    _k3++;
+	                }
+	                _k3--;
+	                if (_k3 != _j3) {
+	                    newBoard[_i3][_k3] = newBoard[_i3][_j3];
+	                    newBoard[_i3][_j3] = null;
+	                }
+	            }
+	        }
+	    }
+	    return newBoard;
+	}
+
+	/**
+	 * 合并棋盘
+	 * @param board
+	 * @param directions 37: left,  38: up, 39: right,  40: down
+	 */
+	function mergeBoard(board, direction) {
+	    var score = 0;
+	    var newBoard = copyBoard(board);
+	    if (direction == 38) {
+	        //up
+	        for (var j = 0; j < 4; j++) {
+	            for (var i = 0; i < 3; i++) {
+	                if (newBoard[i][j] == newBoard[i + 1][j]) {
+	                    newBoard[i][j] *= 2;
+	                    newBoard[i][j] = null;
+	                    i++;
+	                }
+	            }
+	        }
+	    }
+	    if (direction == 40) {
+	        //down
+	        for (var _j4 = 0; _j4 < 4; _j4++) {}
+	    }
+	}
+
+	exports.default = tool;
 
 /***/ }
 /******/ ]);

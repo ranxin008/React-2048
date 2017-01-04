@@ -30,16 +30,18 @@ class App extends React.Component {
         });
     }
 
-    handleKeyDown(event){
-        var newBoard = Tool.moveBoard(this.state.board,event.keyCode);
+    handleKeyDown(event) {
+        var newBoard = Tool.moveBoard(this.state.board, event.keyCode);
+        // newBoard = Tool.mergeBoard(newBoard, event.keyCode).board;
+        newBoard = Tool.moveBoard(newBoard);
         this.setState({
             board: newBoard
         });
 
     }
 
-    componentDidMount(){
-        window.addEventListener('keydown',this.handleKeyDown);
+    componentDidMount() {
+        window.addEventListener('keydown', this.handleKeyDown);
     }
 
     render() {
