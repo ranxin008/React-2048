@@ -32,8 +32,8 @@ class App extends React.Component {
 
     handleKeyDown(event) {
         var newBoard = Tool.moveBoard(this.state.board, event.keyCode);
-        // newBoard = Tool.mergeBoard(newBoard, event.keyCode).board;
-        newBoard = Tool.moveBoard(newBoard);
+        newBoard = Tool.mergeBoard(newBoard, event.keyCode).board;
+        // newBoard = Tool.moveBoard(newBoard);
         this.setState({
             board: newBoard
         });

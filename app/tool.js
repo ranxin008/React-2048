@@ -181,25 +181,47 @@ function moveBoard(board, direction) {
  */
 function mergeBoard(board, direction) {
     var score = 0;
-    var newBoard = copyBoard(board);
-    if (direction == 38 || direction == 40) {
-        //up or down
+    var newBoard = board;
+    if (direction == 38) {
+        //up
         for (let j = 0; j < 4; j++) {
             for (let i = 0; i < 3; i++) {
-                if (newBoard[i][j] == newBoard[i + 1][j]) {
+                if (newBoard[i][j] && newBoard[i + 1][j] && newBoard[i][j] == newBoard[i + 1][j]) {
                     newBoard[i][j] *= 2;
                     newBoard[i + 1][j] = null;
                 }
             }
         }
     }
-    if (direction == 37 || direction == 39) {
-        //left or right
+    if (direction == 40) {
+        //down
+        for (let j = 0; j < 4; j++) {
+            for (let i = 3; i >0; i--) {
+                if (newBoard[i][j] && newBoard[i - 1][j] && newBoard[i][j] == newBoard[i - 1][j]) {
+                    newBoard[i][j] *= 2;
+                    newBoard[i - 1][j] = null;
+                }
+            }
+        }
+    }
+    if (direction == 37 ) {
+        //left
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 3; j++) {
-                if (newBoard[i][j] == newBoard[i][j + 1]) {
+                if (newBoard[i][j] && newBoard[i][j + 1] && newBoard[i][j] == newBoard[i][j + 1]) {
                     newBoard[i][j] *= 2;
                     newBoard[i][j + 1] = null;
+                }
+            }
+        }
+    }
+    if(direction == 39){
+        //right
+        for (let i = 0 ; i < 4 ;i++){
+            for(let j=3;j>0;j--){
+                if (newBoard[i][j] && newBoard[i][j -1] && newBoard[i][j] == newBoard[i][j - 1]) {
+                    newBoard[i][j] *= 2;
+                    newBoard[i][j - 1] = null;
                 }
             }
         }
