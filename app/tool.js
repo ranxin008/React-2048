@@ -8,7 +8,9 @@ var tool = {
     getRandom2OR4: getRandom2OR4,
     intialBoard: intialBoard,
     moveBoard: moveBoard,
-    mergeBoard: mergeBoard
+    mergeBoard: mergeBoard,
+    isLose: isLose,
+    isWin: isWin
 };
 
 /**
@@ -188,6 +190,7 @@ function mergeBoard(board, direction) {
             for (let i = 0; i < 3; i++) {
                 if (newBoard[i][j] && newBoard[i + 1][j] && newBoard[i][j] == newBoard[i + 1][j]) {
                     newBoard[i][j] *= 2;
+                    score += newBoard[i][j];
                     newBoard[i + 1][j] = null;
                 }
             }
@@ -196,31 +199,34 @@ function mergeBoard(board, direction) {
     if (direction == 40) {
         //down
         for (let j = 0; j < 4; j++) {
-            for (let i = 3; i >0; i--) {
+            for (let i = 3; i > 0; i--) {
                 if (newBoard[i][j] && newBoard[i - 1][j] && newBoard[i][j] == newBoard[i - 1][j]) {
                     newBoard[i][j] *= 2;
+                    score += newBoard[i][j];
                     newBoard[i - 1][j] = null;
                 }
             }
         }
     }
-    if (direction == 37 ) {
+    if (direction == 37) {
         //left
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 3; j++) {
                 if (newBoard[i][j] && newBoard[i][j + 1] && newBoard[i][j] == newBoard[i][j + 1]) {
                     newBoard[i][j] *= 2;
+                    score += newBoard[i][j];
                     newBoard[i][j + 1] = null;
                 }
             }
         }
     }
-    if(direction == 39){
+    if (direction == 39) {
         //right
-        for (let i = 0 ; i < 4 ;i++){
-            for(let j=3;j>0;j--){
-                if (newBoard[i][j] && newBoard[i][j -1] && newBoard[i][j] == newBoard[i][j - 1]) {
+        for (let i = 0; i < 4; i++) {
+            for (let j = 3; j > 0; j--) {
+                if (newBoard[i][j] && newBoard[i][j - 1] && newBoard[i][j] == newBoard[i][j - 1]) {
                     newBoard[i][j] *= 2;
+                    score += newBoard[i][j];
                     newBoard[i][j - 1] = null;
                 }
             }
@@ -230,6 +236,63 @@ function mergeBoard(board, direction) {
         board: newBoard,
         score: score
     }
+}
+
+/**
+ * 判断当前是否已经成功
+ * @param arrays
+ * @returns {boolean}
+ */
+function isWin(arrays) {
+    arrays.forEach(function (array, rindex) {
+        array.forEach(function (value, cindex) {
+            if (value == 2048) {
+                return true;
+            }
+        });
+    });
+    return false;
+}
+
+
+/**
+ * 判断两个棋盘是否相同
+ * @param arrays1
+ * @param arrays2
+ */
+function isSameBoard(arrays1, arrays2) {
+    console.log("1： "+JSON.stringify(arrays1));
+    console.log("2： "+JSON.stringify(arrays2));
+    var result = true;
+    arrays1.forEach(function (array, rindex) {
+        array.forEach(function (value, cindex) {
+            if (value != arrays2[rindex][cindex]) {
+                result = false;
+            }
+        });
+    });
+    return result;
+}
+
+/**
+ * 判断当前游戏是否已经失败
+ * @param array
+ */
+function isLose(array) {
+    if (judgeHasPostion(array)) {
+        //has empty position
+        return false;
+    }
+
+    var result = true;
+
+    [37, 38, 39, 40].forEach(function (value) {
+        var newBoard = mergeBoard(array, value);
+        if (!isSameBoard(newBoard, array)) {
+            result = false;
+        }
+    });
+    return result;
 }
 
 

@@ -6,11 +6,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import GameContainer from './component/GameContainer';
 import Tool from './tool';
+import './css/index.css';
 
-// import 'css/index.css';
-require('./css/index.css');
-
-//棋盘为二维数组
 
 class App extends React.Component {
     constructor(props) {
@@ -32,12 +29,28 @@ class App extends React.Component {
 
     handleKeyDown(event) {
         var newBoard = Tool.moveBoard(this.state.board, event.keyCode);
-        newBoard = Tool.mergeBoard(newBoard, event.keyCode).board;
-        // newBoard = Tool.moveBoard(newBoard);
+        var result = Tool.mergeBoard(newBoard, event.keyCode);
+        newBoard = result.board;
+        newBoard = Tool.moveBoard(newBoard);
         this.setState({
             board: newBoard
         });
-
+        var newPostion = Tool.getRandomPostion(this.state.board);
+        this.setState(function (preState) {
+            var board = preState.board;
+            var score = preState.score + result.score;
+            board[newPostion[0]][newPostion[1]] = Tool.getRandom2OR4();
+            return {
+                score: score,
+                board: board
+            }
+        });
+        if(Tool.isWin(this.state.board)){
+            alert('哇，你赢了！再来一盘吧！');
+        }
+        if(Tool.isLose(this.state.board)){
+            alert('真遗憾！你输了，再来一盘吧！');
+        }
     }
 
     componentDidMount() {

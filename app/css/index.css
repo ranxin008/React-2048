@@ -103,6 +103,7 @@
     border-radius: 5px;
     text-align: center;
     padding-top: 19px;
+    transition: all 100ms linear;
 }
 .valuenull{
     background-color: rgba(238, 228, 218, 0.35);
