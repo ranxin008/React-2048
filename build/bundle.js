@@ -73,7 +73,7 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by mr_wang on 2017/1/1.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by wanglei on 2017/1/1.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 	var App = function (_React$Component) {
@@ -104,29 +104,35 @@
 	    }, {
 	        key: 'handleKeyDown',
 	        value: function handleKeyDown(event) {
+	            if ([37, 38, 39, 40].indexOf(event.keyCode) == -1) {
+	                return false;
+	            }
 	            var newBoard = _tool2.default.moveBoard(this.state.board, event.keyCode);
-	            // var result = Tool.mergeBoard(newBoard, event.keyCode);
-	            // newBoard = result.board;
-	            // newBoard = Tool.moveBoard(newBoard);
+	            var result = _tool2.default.mergeBoard(newBoard, event.keyCode);
+	            newBoard = result.board;
+	            newBoard = _tool2.default.moveBoard(newBoard);
 	            this.setState({
 	                board: newBoard
 	            });
-	            // var newPostion = Tool.getRandomPostion(this.state.board);
-	            // this.setState(function (preState) {
-	            //     var board = preState.board;
-	            //     var score = preState.score + result.score;
-	            //     board[newPostion[0]][newPostion[1]] = Tool.getRandom2OR4();
-	            //     return {
-	            //         score: score,
-	            //         board: board
-	            //     }
-	            // });
-	            // if(Tool.isWin(this.state.board)){
-	            //     alert('哇，你赢了！再来一盘吧！');
-	            // }
-	            // if(Tool.isLose(this.state.board)){
-	            //     alert('真遗憾！你输了，再来一盘吧！');
-	            // }
+	            var newPostion = _tool2.default.getRandomPostion(this.state.board);
+	            if (newPostion != null) {
+	                this.setState(function (preState) {
+	                    var board = preState.board;
+	                    var score = preState.score + result.score;
+	                    board[newPostion[0]][newPostion[1]] = _tool2.default.getRandom2OR4();
+	                    return {
+	                        score: score,
+	                        board: board
+	                    };
+	                });
+	            }
+	            if (_tool2.default.isWin(this.state.board)) {
+	                alert('哇，你赢了！再来一盘吧！');
+	            }
+	            console.log('Tool.isWin(this.state.board): ' + _tool2.default.isLose(this.state.board));
+	            if (_tool2.default.isLose(this.state.board)) {
+	                alert('真遗憾！你输了，再来一盘吧！');
+	            }
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -22103,7 +22109,7 @@
 /* 184 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -22227,7 +22233,7 @@
 	        for (var _j = 0; _j < 4; _j++) {
 	            for (var _i = 2; _i >= 0; _i--) {
 	                if (newBoard[_i][_j] != null) {
-	                    var _k = +1;
+	                    var _k = _i + 1;
 	                    while (_k < 4 && newBoard[_k][_j] == null) {
 	                        _k++;
 	                    }
@@ -22286,7 +22292,7 @@
 	 */
 	function mergeBoard(board, direction) {
 	    var score = 0;
-	    var newBoard = board;
+	    var newBoard = copyBoard(board);
 	    if (direction == 38) {
 	        //up
 	        for (var j = 0; j < 4; j++) {
@@ -22363,17 +22369,16 @@
 	 * @param arrays2
 	 */
 	function isSameBoard(arrays1, arrays2) {
-	    console.log("1： " + JSON.stringify(arrays1));
-	    console.log("2： " + JSON.stringify(arrays2));
-	    var result = true;
-	    arrays1.forEach(function (array, rindex) {
-	        array.forEach(function (value, cindex) {
-	            if (value != arrays2[rindex][cindex]) {
-	                result = false;
+	    console.log(JSON.stringify(arrays1));
+	    console.log(JSON.stringify(arrays2));
+	    for (var i = 0; i < arrays1.length; i++) {
+	        for (var j = 0; j < arrays2.length; j++) {
+	            if (arrays1[i][j] != arrays2[i][j]) {
+	                return false;
 	            }
-	        });
-	    });
-	    return result;
+	        }
+	    }
+	    return true;
 	}
 
 	/**
@@ -22382,18 +22387,20 @@
 	 */
 	function isLose(array) {
 	    if (judgeHasPostion(array)) {
-	        //has empty position
 	        return false;
 	    }
-
 	    var result = true;
-
+	    console.log('result1: ' + result);
 	    [37, 38, 39, 40].forEach(function (value) {
-	        var newBoard = mergeBoard(array, value);
+	        var newBoard = mergeBoard(array, value).board;
 	        if (!isSameBoard(newBoard, array)) {
+	            console.log('coming...');
+	            console.log('newBoard：' + newBoard);
+	            console.log('oldBoard:' + array);
 	            result = false;
 	        }
 	    });
+	    console.log('result2: ' + result);
 	    return result;
 	}
 
