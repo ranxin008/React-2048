@@ -1,5 +1,5 @@
 /**
- * Created by mr_wang on 2017/1/1.
+ * Created by wanglei on 2017/1/1.
  */
 
 import React from 'react';
@@ -28,6 +28,9 @@ class App extends React.Component {
     }
 
     handleKeyDown(event) {
+        if ([37, 38, 39, 40].indexOf(event.keyCode) == -1) {
+            return false;
+        }
         var newBoard = Tool.moveBoard(this.state.board, event.keyCode);
         var result = Tool.mergeBoard(newBoard, event.keyCode);
         newBoard = result.board;
@@ -36,19 +39,22 @@ class App extends React.Component {
             board: newBoard
         });
         var newPostion = Tool.getRandomPostion(this.state.board);
-        this.setState(function (preState) {
-            var board = preState.board;
-            var score = preState.score + result.score;
-            board[newPostion[0]][newPostion[1]] = Tool.getRandom2OR4();
-            return {
-                score: score,
-                board: board
-            }
-        });
-        if(Tool.isWin(this.state.board)){
+        if (newPostion != null) {
+            this.setState(function (preState) {
+                var board = preState.board;
+                var score = preState.score + result.score;
+                board[newPostion[0]][newPostion[1]] = Tool.getRandom2OR4();
+                return {
+                    score: score,
+                    board: board
+                }
+            });
+        }
+        if (Tool.isWin(this.state.board)) {
             alert('哇，你赢了！再来一盘吧！');
         }
-        if(Tool.isLose(this.state.board)){
+        console.log('Tool.isWin(this.state.board): '+Tool.isLose(this.state.board));
+        if (Tool.isLose(this.state.board)) {
             alert('真遗憾！你输了，再来一盘吧！');
         }
     }

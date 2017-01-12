@@ -124,7 +124,7 @@ function moveBoard(board, direction) {
         for (let j = 0; j < 4; j++) {
             for (let i = 2; i >= 0; i--) {
                 if (newBoard[i][j] != null) {
-                    let k = j + 1;
+                    let k = i + 1;
                     while (k < 4 && newBoard[k][j] == null) {
                         k++;
                     }
@@ -183,15 +183,15 @@ function moveBoard(board, direction) {
  */
 function mergeBoard(board, direction) {
     var score = 0;
-    var newBoard = board;
+    var newBoard = copyBoard(board);
     if (direction == 38) {
         //up
         for (let j = 0; j < 4; j++) {
             for (let i = 0; i < 3; i++) {
                 if (newBoard[i][j] && newBoard[i + 1][j] && newBoard[i][j] == newBoard[i + 1][j]) {
                     newBoard[i][j] *= 2;
-                    score += newBoard[i][j];
                     newBoard[i + 1][j] = null;
+                    score += newBoard[i][j];
                 }
             }
         }
@@ -202,8 +202,8 @@ function mergeBoard(board, direction) {
             for (let i = 3; i > 0; i--) {
                 if (newBoard[i][j] && newBoard[i - 1][j] && newBoard[i][j] == newBoard[i - 1][j]) {
                     newBoard[i][j] *= 2;
-                    score += newBoard[i][j];
                     newBoard[i - 1][j] = null;
+                    score += newBoard[i][j];
                 }
             }
         }
@@ -214,8 +214,8 @@ function mergeBoard(board, direction) {
             for (let j = 0; j < 3; j++) {
                 if (newBoard[i][j] && newBoard[i][j + 1] && newBoard[i][j] == newBoard[i][j + 1]) {
                     newBoard[i][j] *= 2;
-                    score += newBoard[i][j];
                     newBoard[i][j + 1] = null;
+                    score += newBoard[i][j];
                 }
             }
         }
@@ -226,8 +226,8 @@ function mergeBoard(board, direction) {
             for (let j = 3; j > 0; j--) {
                 if (newBoard[i][j] && newBoard[i][j - 1] && newBoard[i][j] == newBoard[i][j - 1]) {
                     newBoard[i][j] *= 2;
-                    score += newBoard[i][j];
                     newBoard[i][j - 1] = null;
+                    score += newBoard[i][j];
                 }
             }
         }
@@ -261,17 +261,16 @@ function isWin(arrays) {
  * @param arrays2
  */
 function isSameBoard(arrays1, arrays2) {
-    console.log("1： "+JSON.stringify(arrays1));
-    console.log("2： "+JSON.stringify(arrays2));
-    var result = true;
-    arrays1.forEach(function (array, rindex) {
-        array.forEach(function (value, cindex) {
-            if (value != arrays2[rindex][cindex]) {
-                result = false;
+    console.log(JSON.stringify(arrays1));
+    console.log(JSON.stringify(arrays2));
+    for (var i = 0; i < arrays1.length; i++) {
+        for (var j = 0; j < arrays2.length; j++) {
+            if (arrays1[i][j] != arrays2[i][j]) {
+                return false;
             }
-        });
-    });
-    return result;
+        }
+    }
+    return true;
 }
 
 /**
@@ -280,18 +279,20 @@ function isSameBoard(arrays1, arrays2) {
  */
 function isLose(array) {
     if (judgeHasPostion(array)) {
-        //has empty position
         return false;
     }
-
     var result = true;
-
+    console.log('result1: '+result);
     [37, 38, 39, 40].forEach(function (value) {
-        var newBoard = mergeBoard(array, value);
+        var newBoard = mergeBoard(array, value).board;
         if (!isSameBoard(newBoard, array)) {
+            console.log('coming...');
+            console.log('newBoard：'+newBoard);
+            console.log('oldBoard:' +array);
             result = false;
         }
     });
+    console.log('result2: '+result);
     return result;
 }
 

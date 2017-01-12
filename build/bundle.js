@@ -64,6 +64,8 @@
 
 	var _tool2 = _interopRequireDefault(_tool);
 
+	__webpack_require__(180);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -73,11 +75,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by mr_wang on 2017/1/1.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-	// import 'css/index.css';
-	__webpack_require__(180);
-
-	//棋盘为二维数组
 
 	var App = function (_React$Component) {
 	    _inherits(App, _React$Component);
@@ -108,9 +105,28 @@
 	        key: 'handleKeyDown',
 	        value: function handleKeyDown(event) {
 	            var newBoard = _tool2.default.moveBoard(this.state.board, event.keyCode);
+	            // var result = Tool.mergeBoard(newBoard, event.keyCode);
+	            // newBoard = result.board;
+	            // newBoard = Tool.moveBoard(newBoard);
 	            this.setState({
 	                board: newBoard
 	            });
+	            // var newPostion = Tool.getRandomPostion(this.state.board);
+	            // this.setState(function (preState) {
+	            //     var board = preState.board;
+	            //     var score = preState.score + result.score;
+	            //     board[newPostion[0]][newPostion[1]] = Tool.getRandom2OR4();
+	            //     return {
+	            //         score: score,
+	            //         board: board
+	            //     }
+	            // });
+	            // if(Tool.isWin(this.state.board)){
+	            //     alert('哇，你赢了！再来一盘吧！');
+	            // }
+	            // if(Tool.isLose(this.state.board)){
+	            //     alert('真遗憾！你输了，再来一盘吧！');
+	            // }
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -21770,7 +21786,7 @@
 
 
 	// module
-	exports.push([module.id, ".app{\n    display: block;\n    width: 450px;\n    margin:10px;\n    font-family: arial;\n    background-color: #faf8ef;\n}\n\n.heading{\n    display: block;\n}\n\n.title{\n    width: 50%;\n    font-size: 74px;\n    font-weight: bold;\n    line-height: 66px;\n    margin: 10px;\n    color: #776e65;\n    font-family: \"Clear Sans\", \"Helvetica Neue\", Arial, sans-serif;\n\n}\n.score-container{\n    width: 109px;\n    float: right;\n    margin-top: 10px;\n    text-align: center;\n    background-color: #bbada0;\n    display: inline-block;\n    border-radius: 3px;\n}\n.score-tip{\n    color: #eee4da;\n    font-weight: bold;\n    text-align: center;\n    font-size: 13px;\n}\n.score{\n    color: white;\n    text-align: center;\n    font-size: 25px;\n}\n\n.game-intro{\n    display: block;\n    margin-top: 12px;\n    min-height: 55px;\n}\n\n.subtitle {\n    color: #8f7a66;\n    font-size: 17px;\n    font-weight: bold;\n    padding-left:10px;\n}\n\n.restart-container{\n    width: 109px;\n    height: 32px;\n    float: right;\n    text-align: center;\n    background-color: #8f7a66;\n    display: inline-block;\n    border-radius: 3px;\n    color: #f9f6f2;\n    font-size: 17px;\n    padding-top: 12px;\n    cursor: pointer;\n}\n.game-container{\n    width: 426px;\n    height: 426px;\n    margin: 10px 0px;\n    padding: 12px;\n    background: #bbada0;\n    border-radius: 6px;\n}\n.grid-row{\n    height: 97.5px;\n    width:100%;\n}\n\n.grid-col{\n    height: 97px;\n    width: 97px;\n    margin-right: 12px;\n    margin-bottom: 12px;\n    float: left;\n}\n\n.grid-col-end{\n    height: 97px;\n    width: 97px;\n    margin-bottom: 12px;\n    float: left;\n}\n\n.tile{\n    height: 78px;\n    font-weight: bold;\n    font-size: 45px;\n    color: white;\n    border-radius: 5px;\n    text-align: center;\n    padding-top: 19px;\n}\n.valuenull{\n    background-color: rgba(238, 228, 218, 0.35);\n}\n.value2{\n    background-color: #ebb26f;\n    font-size: 52px;\n}\n.value4{\n    background-color: #ea6feb;\n    font-size: 52px;\n}\n\n.value8 {\n    background-color: #eb6fa3;\n    font-size: 52px;\n}\n\n.value16 {\n    background-color: #7a6feb;\n    font-size: 48px;\n}\n\n.value32 {\n    background-color: #af6feb;\n    font-size: 48px;\n}\n\n.value64 {\n    background-color: #6febcf;\n    font-size: 48px;\n}\n\n.value128 {\n    background-color: #6fbeeb;\n    font-size: 44px;\n}\n\n.value256 {\n    background-color: #afeb6f;\n    font-size: 44px;\n}\n\n.value512 {\n    background-color: #7aeb6f;\n    font-size: 44px;\n}\n\n.value1024 {\n    background-color: #e4eb6f;\n    font-size: 40px;\n}\n.value2048 {\n    background-color: #d1eb6b;\n    font-size: 40px;\n}", ""]);
+	exports.push([module.id, ".app{\n    display: block;\n    width: 450px;\n    margin:10px;\n    font-family: arial;\n    background-color: #faf8ef;\n}\n\n.heading{\n    display: block;\n}\n\n.title{\n    width: 50%;\n    font-size: 74px;\n    font-weight: bold;\n    line-height: 66px;\n    margin: 10px;\n    color: #776e65;\n    font-family: \"Clear Sans\", \"Helvetica Neue\", Arial, sans-serif;\n\n}\n.score-container{\n    width: 109px;\n    float: right;\n    margin-top: 10px;\n    text-align: center;\n    background-color: #bbada0;\n    display: inline-block;\n    border-radius: 3px;\n}\n.score-tip{\n    color: #eee4da;\n    font-weight: bold;\n    text-align: center;\n    font-size: 13px;\n}\n.score{\n    color: white;\n    text-align: center;\n    font-size: 25px;\n}\n\n.game-intro{\n    display: block;\n    margin-top: 12px;\n    min-height: 55px;\n}\n\n.subtitle {\n    color: #8f7a66;\n    font-size: 17px;\n    font-weight: bold;\n    padding-left:10px;\n}\n\n.restart-container{\n    width: 109px;\n    height: 32px;\n    float: right;\n    text-align: center;\n    background-color: #8f7a66;\n    display: inline-block;\n    border-radius: 3px;\n    color: #f9f6f2;\n    font-size: 17px;\n    padding-top: 12px;\n    cursor: pointer;\n}\n.game-container{\n    width: 426px;\n    height: 426px;\n    margin: 10px 0px;\n    padding: 12px;\n    background: #bbada0;\n    border-radius: 6px;\n}\n.grid-row{\n    height: 97.5px;\n    width:100%;\n}\n\n.grid-col{\n    height: 97px;\n    width: 97px;\n    margin-right: 12px;\n    margin-bottom: 12px;\n    float: left;\n}\n\n.grid-col-end{\n    height: 97px;\n    width: 97px;\n    margin-bottom: 12px;\n    float: left;\n}\n\n.tile{\n    height: 78px;\n    font-weight: bold;\n    font-size: 45px;\n    color: white;\n    border-radius: 5px;\n    text-align: center;\n    padding-top: 19px;\n    transition: all 100ms linear;\n}\n.valuenull{\n    background-color: rgba(238, 228, 218, 0.35);\n}\n.value2{\n    background-color: #ebb26f;\n    font-size: 52px;\n}\n.value4{\n    background-color: #ea6feb;\n    font-size: 52px;\n}\n\n.value8 {\n    background-color: #eb6fa3;\n    font-size: 52px;\n}\n\n.value16 {\n    background-color: #7a6feb;\n    font-size: 48px;\n}\n\n.value32 {\n    background-color: #af6feb;\n    font-size: 48px;\n}\n\n.value64 {\n    background-color: #6febcf;\n    font-size: 48px;\n}\n\n.value128 {\n    background-color: #6fbeeb;\n    font-size: 44px;\n}\n\n.value256 {\n    background-color: #afeb6f;\n    font-size: 44px;\n}\n\n.value512 {\n    background-color: #7aeb6f;\n    font-size: 44px;\n}\n\n.value1024 {\n    background-color: #e4eb6f;\n    font-size: 40px;\n}\n.value2048 {\n    background-color: #d1eb6b;\n    font-size: 40px;\n}", ""]);
 
 	// exports
 
@@ -22101,7 +22117,10 @@
 	    copyBoard: copyBoard,
 	    getRandom2OR4: getRandom2OR4,
 	    intialBoard: intialBoard,
-	    moveBoard: moveBoard
+	    moveBoard: moveBoard,
+	    mergeBoard: mergeBoard,
+	    isLose: isLose,
+	    isWin: isWin
 	};
 
 	/**
@@ -22208,7 +22227,7 @@
 	        for (var _j = 0; _j < 4; _j++) {
 	            for (var _i = 2; _i >= 0; _i--) {
 	                if (newBoard[_i][_j] != null) {
-	                    var _k = _j + 1;
+	                    var _k = +1;
 	                    while (_k < 4 && newBoard[_k][_j] == null) {
 	                        _k++;
 	                    }
@@ -22267,23 +22286,115 @@
 	 */
 	function mergeBoard(board, direction) {
 	    var score = 0;
-	    var newBoard = copyBoard(board);
+	    var newBoard = board;
 	    if (direction == 38) {
 	        //up
 	        for (var j = 0; j < 4; j++) {
 	            for (var i = 0; i < 3; i++) {
-	                if (newBoard[i][j] == newBoard[i + 1][j]) {
+	                if (newBoard[i][j] && newBoard[i + 1][j] && newBoard[i][j] == newBoard[i + 1][j]) {
 	                    newBoard[i][j] *= 2;
-	                    newBoard[i][j] = null;
-	                    i++;
+	                    newBoard[i + 1][j] = null;
+	                    score += newBoard[i][j];
 	                }
 	            }
 	        }
 	    }
 	    if (direction == 40) {
 	        //down
-	        for (var _j4 = 0; _j4 < 4; _j4++) {}
+	        for (var _j4 = 0; _j4 < 4; _j4++) {
+	            for (var _i4 = 3; _i4 > 0; _i4--) {
+	                if (newBoard[_i4][_j4] && newBoard[_i4 - 1][_j4] && newBoard[_i4][_j4] == newBoard[_i4 - 1][_j4]) {
+	                    newBoard[_i4][_j4] *= 2;
+	                    newBoard[_i4 - 1][_j4] = null;
+	                    score += newBoard[_i4][_j4];
+	                }
+	            }
+	        }
 	    }
+	    if (direction == 37) {
+	        //left
+	        for (var _i5 = 0; _i5 < 4; _i5++) {
+	            for (var _j5 = 0; _j5 < 3; _j5++) {
+	                if (newBoard[_i5][_j5] && newBoard[_i5][_j5 + 1] && newBoard[_i5][_j5] == newBoard[_i5][_j5 + 1]) {
+	                    newBoard[_i5][_j5] *= 2;
+	                    newBoard[_i5][_j5 + 1] = null;
+	                    score += newBoard[_i5][_j5];
+	                }
+	            }
+	        }
+	    }
+	    if (direction == 39) {
+	        //right
+	        for (var _i6 = 0; _i6 < 4; _i6++) {
+	            for (var _j6 = 3; _j6 > 0; _j6--) {
+	                if (newBoard[_i6][_j6] && newBoard[_i6][_j6 - 1] && newBoard[_i6][_j6] == newBoard[_i6][_j6 - 1]) {
+	                    newBoard[_i6][_j6] *= 2;
+	                    newBoard[_i6][_j6 - 1] = null;
+	                    score += newBoard[_i6][_j6];
+	                }
+	            }
+	        }
+	    }
+	    return {
+	        board: newBoard,
+	        score: score
+	    };
+	}
+
+	/**
+	 * 判断当前是否已经成功
+	 * @param arrays
+	 * @returns {boolean}
+	 */
+	function isWin(arrays) {
+	    arrays.forEach(function (array, rindex) {
+	        array.forEach(function (value, cindex) {
+	            if (value == 2048) {
+	                return true;
+	            }
+	        });
+	    });
+	    return false;
+	}
+
+	/**
+	 * 判断两个棋盘是否相同
+	 * @param arrays1
+	 * @param arrays2
+	 */
+	function isSameBoard(arrays1, arrays2) {
+	    console.log("1： " + JSON.stringify(arrays1));
+	    console.log("2： " + JSON.stringify(arrays2));
+	    var result = true;
+	    arrays1.forEach(function (array, rindex) {
+	        array.forEach(function (value, cindex) {
+	            if (value != arrays2[rindex][cindex]) {
+	                result = false;
+	            }
+	        });
+	    });
+	    return result;
+	}
+
+	/**
+	 * 判断当前游戏是否已经失败
+	 * @param array
+	 */
+	function isLose(array) {
+	    if (judgeHasPostion(array)) {
+	        //has empty position
+	        return false;
+	    }
+
+	    var result = true;
+
+	    [37, 38, 39, 40].forEach(function (value) {
+	        var newBoard = mergeBoard(array, value);
+	        if (!isSameBoard(newBoard, array)) {
+	            result = false;
+	        }
+	    });
+	    return result;
 	}
 
 	exports.default = tool;
